@@ -1,0 +1,836 @@
+/* GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #0d0d0d;
+    color: #fff;
+    line-height: 1.6;
+}
+
+section {
+    padding: 70px 10%;
+}
+
+/* ================================================= */
+/* FLOATING BACKGROUND ANIMATION (FULL PAGE FIXED)   */
+/* ================================================= */
+
+/* Container poori screen ko cover karega aur sabse peeche rahega */
+#full-page-float {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; 
+    overflow: hidden; 
+    z-index: -1; 
+    pointer-events: none;
+    opacity: 0.7; 
+}
+
+/* Individual Floating Shape ka Base Style */
+.floating-shape {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 234, 255, 0.15); 
+    border-radius: 50%; 
+    animation: floatAnimation 15s infinite ease-in-out, pulseGlow 5s infinite alternate; 
+    bottom: -100px; 
+    box-shadow: 0 0 10px #00eaff; 
+    z-index: 0;
+}
+
+/* Har element ko random position, size aur speed dena */
+.floating-shape:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; animation-duration: 18s; }
+.floating-shape:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+.floating-shape:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; animation-duration: 15s; }
+.floating-shape:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 10s; }
+.floating-shape:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 3s; animation-duration: 9s; }
+.floating-shape:nth-child(6) { left: 85%; width: 100px; height: 100px; animation-delay: 0s; animation-duration: 20s; }
+.floating-shape:nth-child(7) { left: 50%; width: 35px; height: 35px; animation-delay: 1s; animation-duration: 16s; }
+.floating-shape:nth-child(8) { left: 30%; width: 90px; height: 90px; animation-delay: 6s; animation-duration: 22s; }
+.floating-shape:nth-child(9) { left: 75%; width: 45px; height: 45px; animation-delay: 5s; animation-duration: 14s; }
+.floating-shape:nth-child(10) { left: 5%; width: 55px; height: 55px; animation-delay: 8s; animation-duration: 17s; }
+
+/* 1. Floating Animation: Elements ko upar le jana */
+@keyframes floatAnimation {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(360deg); 
+        opacity: 0;
+    }
+}
+
+/* 2. Pulse Glow: Halka sa dim/bright hona */
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px #00eaff; }
+    50% { box-shadow: 0 0 20px #00eaff, 0 0 30px #00eaff; }
+    100% { box-shadow: 0 0 10px #00eaff; }
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 10%;
+    background: #111;
+    position: sticky;
+    top: 0;
+    z-index: 1000; 
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #00eaff;
+}
+
+/* Navbar Logo Image Style */
+.logo img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 3px solid #00eaff;
+    object-fit: cover;
+    transition: 0.3s;
+    box-shadow: 0 0 15px #00eaff;
+}
+
+.logo img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 35px #00eaff, 0 0 60px #00eaff55;
+    border-color: #fff;
+}
+
+/* 1. NAV LINKS: Desktop View */
+.nav-links {
+    display: flex; 
+    list-style: none; 
+    gap: 25px; 
+}
+
+/* 2. NAVBAR LINKS: Smooth Underline Effect */
+.nav-links a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+}
+
+/* ::after Element: The Line */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0; 
+    height: 2px;
+    background: #00eaff;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease-out;
+}
+
+/* Hover Effect: Line ko dikhao */
+.nav-links a:hover {
+    color: #00eaff;
+    text-shadow: 0 0 10px #00eaff;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* HAMBURGER MENU ICON */
+.hamburger-menu {
+    cursor: pointer;
+    display: none; 
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    z-index: 1001; 
+}
+
+.hamburger-menu .bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #00eaff;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+}
+
+/* Jab menu open ho (JavaScript se yeh class apply hogi) */
+.hamburger-menu.active .bar:nth-child(2) {
+    opacity: 0; 
+}
+
+.hamburger-menu.active .bar:nth-child(1) {
+    transform: translateY(11px) rotate(45deg); 
+}
+
+.hamburger-menu.active .bar:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg); 
+}
+
+
+/* HERO SECTION */
+.hero {
+    position: relative; 
+    height: 90vh;
+    background: linear-gradient(to right, #000, #0f2b3a);
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    z-index: 1; 
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    z-index: 2; 
+}
+
+/* Hero Logo Styling */
+.hero-logo img {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 5px solid #00eaff;
+    object-fit: cover;
+    box-shadow: 0 0 30px #00eaff;
+    transition: 0.3s;
+}
+
+.hero-logo img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 50px #00eaff, 0 0 70px #00eaff55;
+    border-color: #fff;
+}
+
+/* Headings Left Aligned */
+.hero-text {
+    text-align: left;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+}
+
+.hero-text span {
+    color: #00eaff;
+}
+
+.hero-text p {
+    font-size: 20px;
+    margin: 10px 0 20px;
+}
+
+/* HERO TEXT: Typing Cursor */
+#typing-text {
+    color: #00eaff; 
+    border-right: 2px solid #00eaff;
+    padding-right: 5px;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Cursor Blink Animation */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #00eaff; }
+}
+
+/* BUTTONS */
+.hire-btn,
+.cv-btn {
+    background: #00eaff;
+    border: none;
+    padding: 12px 25px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+    text-decoration: none; 
+    color: #0d0d0d; 
+    display: inline-block; 
+    text-align: center;
+}
+
+.hire-btn:hover,
+.cv-btn:hover {
+    background: #009ec2;
+    transform: scale(1.05);
+}
+/* ABOUT */
+.section-title {
+    font-size: 34px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #00eaff;
+}
+
+.about p {
+    font-size: 18px;
+    max-width: 800px;
+    margin: auto;
+    text-align:left ;
+}
+
+/* EDUCATION */
+.edu-card {
+    background: #111;
+    padding: 20px;
+    border-left: 4px solid #00eaff;
+    margin: 20px auto;
+    width: 60%;
+}
+
+/* SKILLS SECTION: PROGRESS BARS STYLING */
+.skills-box {
+    display: flex;
+    flex-direction: column; 
+    gap: 30px;
+    max-width: 600px; 
+    margin: 30px auto;
+}
+
+.skill-item h4 {
+    display: flex;
+    justify-content: space-between; 
+    margin-bottom: 8px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.skill-item .percent {
+    color: #00eaff;
+    font-weight: bold;
+}
+
+/* Progress Bar Track (Container) */
+.progress-bar-container {
+    background: #222;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden; 
+    border: 1px solid #00eaff55;
+}
+
+/* Progress Bar Fill (The colored bar) */
+.progress-bar {
+    height: 100%;
+    background: #00eaff;
+    width: 0; 
+    border-radius: 5px;
+    transition: width 1.5s ease-in-out; 
+}
+
+/* CONTACT FORM */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 50%;
+    margin: auto;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 12px;
+    outline: none;
+    border: 2px solid #00eaff;
+    background: #0b0b0b;
+    color: white;
+}
+
+.contact-form button {
+    background: #00eaff;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.contact-form button:hover {
+    background: #009ac0;
+}
+
+/* PROJECTS SECTION: 3D FLIP CARD STYLING */
+.project-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; 
+    margin-top: 30px;
+}
+
+/* 1. Base Card Container (Important for 3D perspective) */
+.project-card {
+    width: 290px;
+    height: 350px; 
+    perspective: 1000px; 
+    border: none; 
+    background: transparent;
+    box-shadow: none;
+    transition: none;
+}
+
+.project-card:hover {
+    transform: none; 
+    box-shadow: none;
+}
+
+/* 2. Card Inner: Woh element jo flip hoga */
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s; 
+    transform-style: preserve-3d; 
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Card Flip on Hover */
+.project-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* 3. Card Front aur Card Back ki common styling */
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; 
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #111;
+    border: 2px solid #00eaff55; 
+}
+
+/* Card Front Content */
+.card-front img {
+    height: 170px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #00eaff;
+    margin-bottom: 12px;
+}
+.card-front h3 { margin-bottom: 5px; }
+.card-front p { font-size: 14px; color: #aaa; }
+
+
+/* 4. Card Back specific styling */
+.card-back {
+    background: #0d0d0d; 
+    color: #fff;
+    transform: rotateY(180deg); 
+    justify-content: center;
+    align-items: center;
+    padding: 25px; 
+}
+
+.card-back h4 {
+    font-size: 20px;
+    color: #00eaff;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.card-back p {
+    font-size: 15px;
+    text-align: center;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+/* 5. Links (View Details/Live Demo) Styling */
+.project-links {
+    display: flex;
+    justify-content: center; 
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.live-btn, .github-btn {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+    display: inline-block;
+    color: #0d0d0d;
+    font-weight: bold;
+}
+
+/* View Details button */
+.live-btn {
+    background: #00eaff; 
+}
+
+/* Live Demo button */
+.github-btn {
+    background: #ff5555; 
+    color: #fff;
+}
+
+.live-btn:hover, .github-btn:hover {
+    transform: scale(1.05);
+}
+
+/* === FOOTER UPDATED: PROFESSIONAL LOOK (CIRCULAR ICONS INCLUDED) === */
+footer {
+    background: #111;
+    padding: 0 10%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    border-top: 5px solid #00eaff; 
+}
+
+/* Footer Top: Contact Info & Social Links (Wrapper for Row Layout) */
+.footer-content-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%; 
+    padding: 40px 0; 
+}
+
+/* Footer Left: Contact Details */
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 17px;
+    color: #ddd;
+}
+
+.footer-item img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+    /* Images par neon blue effect */
+    filter: invert(1) drop-shadow(0 0 5px #00eaff); 
+}
+
+/* Footer Right: Social Media Icons */
+.footer-right {
+    display: flex;
+    flex-direction: row; 
+    gap: 20px;
+    align-items: center;
+    margin-top: 5px; 
+}
+
+/* CIRCULAR SOCIAL ICONS FIX */
+.footer-right a img {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; /* CIRCULAR SHAPE */
+    object-fit: cover; 
+    transition: transform 0.3s ease; 
+    filter: none; /* Invert filter hata diya taki actual logo dikhe */
+}
+
+/* Hover effect for social icons */
+.footer-right a img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 15px #00eaff; /* Neon glow on hover */
+}
+
+/* COPYRIGHT LINE */
+.copyright-line {
+    background: #0d0d0d; 
+    color: #888;
+    width: 100%;
+    padding: 15px 0;
+    margin: 0; 
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid #333; 
+}
+/* === MODAL POPUP STYLING (NO CHANGE) === */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8); 
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #1a1a1a;
+    margin: 5% auto; 
+    padding: 30px;
+    border: 3px solid #00eaff;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 0 30px #00eaff55;
+}
+
+.close-button {
+    color: #fff;
+    float: right;
+    font-size: 38px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close-button:hover {
+    color: #00eaff;
+    cursor: pointer;
+}
+
+#modal-title {
+    color: #00eaff;
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+#modal-tech {
+    color: #bbb;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+#modal-body {
+    color: #ddd;
+    line-height: 1.8;
+}
+
+.modal-content hr {
+    border-color: #333;
+    margin: 15px 0;
+}
+
+.modal-buttons-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+
+/* ================================================= */
+/* MEDIA QUERIES FOR RESPONSIVENESS (FINAL & FIXED)  */
+/* ================================================= */
+
+/* --- Tablet Devices and Mobile Menu (Max Width: 992px) --- */
+@media (max-width: 992px) {
+    section {
+        padding: 50px 5%; 
+    }
+
+    /* === A. NAVBAR & HAMBURGER Adjustments === */
+    .navbar {
+        padding: 15px 5%; 
+    }
+    
+    /* 1. Hamburger Icon ko dikhayein */
+    .hamburger-menu {
+        display: flex; 
+    }
+
+    /* 2. NAV LINKS: Off-Canvas Menu Setup (FIXED) */
+    .nav-links {
+        display: flex; /* Display must be flex/block for layout in mobile */
+        flex-direction: column;
+        position: fixed;
+        top: 0; 
+        right: 0; 
+        width: 65%; /* Width thoda badhaya */
+        max-width: 300px; 
+        height: 100vh; 
+        background: #111; 
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.7);
+        padding: 100px 0 20px; 
+        z-index: 990; 
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+        
+        /* Default: Screen ke right side par chhupa hua */
+        transform: translateX(100%); 
+        /* Jab menu close ho to links ko visually hide rakhein */
+        visibility: hidden; 
+    }
+    
+    /* 3. Links ko vertically align karna */
+    .nav-links li {
+        text-align: center;
+        margin: 20px 0; 
+    }
+    .nav-links a {
+        padding: 10px 0;
+        display: block; 
+        font-size: 1.2rem; 
+        font-weight: bold;
+    }
+    
+    /* 4. Menu Open State (JavaScript se yeh class apply hogi) */
+    .nav-links.open {
+        transform: translateX(0); /* Screen par laao */
+        visibility: visible; /* Dikhao */
+    }
+
+    /* === B. HERO SECTION Adjustments (No change) === */
+    .hero {
+        height: auto; 
+        min-height: 85vh; 
+        padding: 100px 5% 50px; 
+    }
+    .hero-content {
+        flex-direction: column; 
+        text-align: center;
+        gap: 30px;
+    }
+
+    .hero-text {
+        order: 2; 
+        margin-top: 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 3.2rem;
+    }
+
+    .hero-logo {
+        order: 1; 
+    }
+    
+    .hero-logo img {
+        width: 200px; 
+        height: 200px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    /* Baaki Sections */
+    .edu-card {
+        width: 80%;
+    }
+    .contact-form {
+        width: 70%;
+    }
+}
+
+/* --- Mobile Devices (Max Width: 576px) --- */
+@media (max-width: 576px) {
+    /* General Adjustments */
+    section {
+        padding: 40px 4%;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    /* === A. NAVBAR Adjustments === */
+    .navbar {
+        padding: 15px 4%;
+    }
+    .logo {
+        font-size: 22px;
+    }
+    .logo img {
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* Mobile Off-Canvas width adjust */
+    .nav-links {
+        width: 75%; 
+    }
+    
+    /* === B. HERO SECTION Adjustments === */
+    .hero {
+        padding: 80px 4% 40px;
+        min-height: 80vh;
+    }
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-logo img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column; 
+        gap: 15px;
+    }
+    
+    .hero-buttons .hire-btn,
+    .hero-buttons .cv-btn {
+        width: 90%; 
+        margin: 5px auto;
+    }
+    
+    /* === C. FOOTER Adjustments === */
+    footer .footer-content-top {
+        flex-direction: column;
+        align-items: center; 
+        padding: 20px 0;
+    }
+    .footer-left {
+        width: 100%;
+        margin-bottom: 20px;
+        align-items: center;
+    }
+    .footer-item {
+        justify-content: center; 
+    }
+    .footer-right {
+        justify-content: center; 
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    /* === D. PROJECT and CONTACT Adjustments === */
+    .project-card {
+        width: 100%; 
+    }
+    .contact-form {
+        width: 95%;
+    }
+    .edu-card {
+        width: 95%;
+    }
+}
